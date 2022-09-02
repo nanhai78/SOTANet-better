@@ -61,7 +61,7 @@ class YoloHead(nn.Module):
 
 
 class YoloBody(nn.Module):
-    def __init__(self, num_classes, model_size='Medium', depthwise=True):
+    def __init__(self, num_classes, model_size='Medium', depthwise=False):
         super(YoloBody, self).__init__()
         self.backbone = ShuffleFuse(model_size)
         if self.backbone.model_size == "Large":

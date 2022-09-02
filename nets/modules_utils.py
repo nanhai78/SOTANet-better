@@ -155,9 +155,9 @@ class Shufflenet(nn.Module):
 def channel_shuffle(x):
     batchsize, num_channels, height, width = x.data.size()
     assert (num_channels % 4 == 0)
-    x = x.reshape(batchsize * num_channels // 2, 2, height * width)
-    x = x.permute(1, 0, 2)
-    x = x.reshape(2, -1, num_channels // 2, height, width)
+    x = x.reshape(batchsize * num_channels // 2, 2, height * width)  # reshape -> bs * c/2, 2, H*W
+    x = x.permute(1, 0, 2)  # 交换维度 2, bs * c/2, H*W
+    x = x.reshape(2, -1, num_channels // 2, height, width)  # reshape -> 2, bs, c/2, H*W
     return x[0], x[1]
 
 
@@ -469,6 +469,6 @@ class SpatialAttention(nn.Module):
 
 
 if __name__ == '__main__':
-    model = BaseConv(3, 32, 1, 1, act='')
-    x = torch.rand((1, 3, 640, 640))
-    outs = model(x)
+    x = torch.rand((1, 64, 320, 320))
+    x_0, x_1 = channel_shuffle(x)
+    print(x_0)

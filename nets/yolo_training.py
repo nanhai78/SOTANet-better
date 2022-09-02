@@ -8,7 +8,6 @@ from functools import partial
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from nets.yolo import YoloBody
 
 
 class IOUloss(nn.Module):
